@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{username}}{% endblock %}
+{% block main %}
+    <div class="container mt-3">
+        <h1>Welcome {{username}}</h1>
+        <h2>User Info:</h2>
+        <p>First Name: {{first_name}}</p>
+        <p>Last Name: {{last_name}}</p>
+        <p>Email: {{email}}</p>
+    </div>
+    <div class="container mt-3">
+        <div class="row row-cols-auto">
+            <div class="col">
+            <form action="/users/{{username}}/feedback/add" method="GET" class="ml-2">
+                <button class="btn btn-primary">Add Feedback</button>
+            </form>
+            </div>
+            <div class="col">
+            <form action="/users/{{username}}/delete" method="POST" class="ml-2">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+            </div>
+        </div>       
+    </div>
+    <div class="container mt-3 mb-5">
+        <h2>Feedback:</h2>
+        {% for post in feedback %}    
+            <div class="mb-2">
+                <h4>{{post.title}}</h4>
+                <p>{{post.content}}</p>
+                <div class="row row-cols-auto">
+                    <form action="/feedback/{{post.id}}/update">
+                        <button class="btn btn-primary">Update</button>
+                    </form>
+                    <form action="/feedback/{{post.id}}/delete" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
